@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
+import { calculateInvestmentResults, formatter } from "./util/investment";
 
 function App() {
   const [inputs, setInputs] = useState({
@@ -10,13 +11,27 @@ function App() {
     duration: 0,
   });
 
-  function handleValueChange(name, newValue) {
+  function handleValueChange(event) {
+    const {name, value} = event.target
     setInputs((prevValue) => {
       return {
         ...prevValue,
-        [name]: newValue,
+        [name]: value,
       };
     });
+  }
+
+  function deriveAnnualData(){
+  //   const allValuesNonZero = Object.values(inputs).every(value => {
+  //     console.log(inputs)
+  //     console.log(value)
+  //     return (value !== 0)
+  // })
+  //   if(allValuesNonZero){
+  //     setAnnualResult(calculateInvestmentResults(inputs));
+  //   }
+  //   console.log(allValuesNonZero)
+  //   console.log(annualResult)
   }
 
   console.log(inputs);
@@ -26,13 +41,13 @@ function App() {
       <div id="user-input" className="input-group">
         <Input
           initialValue={inputs.initial_investment}
-          name="initial-investment"
+          name="initial_investment"
           label="Initial Investment"
           onValueChange={handleValueChange}
         />
         <Input
           initialValue={inputs.annual_investment}
-          name="annual-investment"
+          name="annual_investment"
           label="Annual Investment"
           onValueChange={handleValueChange}
         />
@@ -49,6 +64,20 @@ function App() {
           onValueChange={handleValueChange}
         />
       </div>
+      <table id="result">
+        <thead>
+          <tr>
+          <th>Year</th>
+          <th>Investment Value</th>
+          <th>Interest(Year)</th>
+          <th>Total Interest</th>
+          <th>Invested Capital</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* {deriveAnnualData(inputs)} */}
+        </tbody>
+      </table>
     </>
   );
 }
